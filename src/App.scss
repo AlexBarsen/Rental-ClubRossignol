@@ -1,0 +1,37 @@
+// global styles + variables
+@import "./assets/styles/base";
+@import "./assets/styles/variables";
+
+// component styles
+@import "./components/booking-reviews/booking-reviews.styles.scss";
+@import "./components//cart-dropdown/cart-dropdown.styles.scss";
+@import "./components/cart-icon/cart-icon.styles.scss";
+@import "./components/checkout-item/checkout-item.styles.scss";
+@import "./components/contact-form/contact-form.styles.scss";
+@import "./components/custom-button/custom-button.styles.scss";
+@import "./components/feature/feature.styles.scss";
+@import "./components/footer/footer.styles.scss";
+@import "./components/footer/footer.styles.scss";
+@import "./components/form-input/form-input.styles.scss";
+@import "./components/gallery/gallery.styles.scss";
+@import "./components/header/header.styles.scss";
+@import "./components/image-modal/image-modal-styles.scss";
+@import "./components/menu-item/menu-item.styles.scss";
+@import "./components/rental-category/rental-category.scss";
+@import "./components/rental-item/rental-item.styles.scss";
+@import "./components/rental-modal/rental-modal.styles.scss";
+@import "./components/restaurant-category/restaurant-category.styles.scss";
+@import "./components/restaurant-item/restaurant-item.styles.scss";
+@import "./components/restaurant-menu/restaurant-menu.styles.scss";
+@import "./components/sign-in-dropdown/sign-in-dropdown.styles.scss";
+@import "./components/sign-in/sign-in.styles.scss";
+@import "./components/sign-up/sign-up.styles.scss";
+@import "./components/social-media/social-media.styles.scss";
+
+// page styles
+@import "./pages/checkout/checkout.styles.scss";
+@import "./pages/contact/contact.styles.scss";
+@import "./pages/homepage/homepage.styles.scss";
+@import "./pages/rental/rental.styles.scss";
+@import "./pages/restaurant/restaurant.styles.scss";
+@import "./pages/sign-in-sign-up/sign-in-sign-up.styles.scss";

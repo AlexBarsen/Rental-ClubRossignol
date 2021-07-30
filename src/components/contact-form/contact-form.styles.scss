@@ -1,0 +1,20 @@
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+
+  &__message--label {
+    font-size: 2rem;
+    padding: 0rem 0.5rem;
+  }
+
+  &__message--input {
+    padding: 1rem;
+    font-size: 1.6rem;
+    text-align: start;
+    border: 0.1rem solid black;
+    border-radius: 0.3rem;
+    width: 55rem;
+    height: 15rem;
+  }
+}

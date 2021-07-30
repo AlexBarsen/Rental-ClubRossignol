@@ -1,0 +1,70 @@
+.checkout-page {
+  width: 85%;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto 0;
+
+  &__header {
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+    padding: 10px 0;
+    display: grid;
+    grid-template-rows: repeat(auto-fill, 5rem);
+    grid-template-columns: 25% 12% 12% 30% 16% 5%;
+    text-align: center;
+
+    &--block {
+      text-transform: capitalize;
+    }
+  }
+
+  &__total {
+    background-color: rgba(#fff, 0.8);
+    border-radius: 1rem;
+    font-size: 3.6rem;
+    padding: 0.5rem 1rem;
+    margin-top: 2.5rem;
+    margin-left: auto;
+  }
+}
+
+.checkout-items {
+  width: 100%;
+  display: grid;
+
+  grid-template-rows: repeat(auto-fill, 1fr);
+  grid-gap: 2rem;
+}
+
+.payment {
+  margin-top: 5rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  width: 70rem;
+  height: 15rem;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(#fff, 0.8);
+  border-radius: 0.5rem;
+}
+
+.test-warning {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.StripeCheckout {
+  align-self: center;
+}
+
+.login-message {
+  font-size: 3rem;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  background-color: rgba(#fff, 0.8);
+  margin-top: 3rem;
+}

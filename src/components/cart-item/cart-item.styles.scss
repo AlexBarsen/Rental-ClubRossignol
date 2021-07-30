@@ -1,0 +1,28 @@
+.cart-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem;
+
+  &__photo {
+    height: 6rem;
+  }
+
+  &__details {
+    font-size: 1.4rem;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &--person {
+      font-size: 1.6rem;
+    }
+
+    &--price {
+      font-size: 1.4rem;
+      text-align: center;
+    }
+  }
+}

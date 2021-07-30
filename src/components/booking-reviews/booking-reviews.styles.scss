@@ -1,0 +1,74 @@
+.booking-reviews {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: rgba(#fff, 0.7);
+  border: 1px solid black;
+  height: auto;
+  // width: 20%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  &__logo {
+    align-self: center;
+    width: 20rem;
+  }
+
+  &__scores {
+    list-style: none;
+    font-size: 1.8rem;
+
+    @media only screen and (max-width: $bp-small) {
+      // height: 40rem;
+      // display: flex;
+    }
+  }
+
+  &__score {
+    // align-self: center;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  &__grade {
+    font-size: 3.6rem;
+    font-weight: 700;
+  }
+
+  &__grades {
+    font-size: 2.2rem;
+    padding: 1rem;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__reserve {
+    text-align: center;
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    border-radius: 3rem;
+    background-color: #12232e;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0.5rem 0.7rem 1rem rgba(#000, 0.3);
+    transition: all 0.2s;
+
+    &:hover {
+      transform: translateY(-0.5rem);
+    }
+
+    &:active {
+      transform: translateY(0rem);
+    }
+  }
+
+  // &__icon {
+  //   height: 2rem;
+  // }
+}

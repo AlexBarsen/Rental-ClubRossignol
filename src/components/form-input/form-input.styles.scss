@@ -1,0 +1,35 @@
+.group {
+  margin-top: 1.5rem;
+  padding: 0.5rem 0;
+  position: relative;
+
+  &__form-input {
+    width: 35rem;
+    height: 3rem;
+    font-size: 2rem;
+    padding: 0 1rem;
+    border: 0.1rem solid black;
+    border-radius: 0.3rem;
+    outline: none;
+
+    &--floating-label {
+      position: absolute;
+      font-size: 1.6rem;
+      color: #cccccc;
+      pointer-events: none;
+      top: 0.9rem;
+      left: 1.2rem;
+      transition: all 0.35s ease;
+    }
+  }
+}
+
+input:focus ~ .group__form-input--floating-label,
+input:not(:focus):valid ~ .group__form-input--floating-label {
+  top: -2.2rem;
+  bottom: 0;
+  left: 0;
+  font-size: 1.6rem;
+  opacity: 1;
+  color: #404040;
+}

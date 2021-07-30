@@ -1,0 +1,51 @@
+// .react-pdf {
+//   &__Document {
+//     max-height: 65rem;
+//     max-width: 50rem;
+//   }
+
+//   &__Page {
+//     max-height: 65rem;
+//     max-width: 50rem;
+
+//     &__canvas {
+//       max-height: 65rem;
+//       max-width: 50rem;
+//     }
+
+//     &__textContent {
+//       max-height: 65rem;
+//       max-width: 50rem;
+//     }
+//   }
+// }
+
+// .restaurant-page {
+//   display: flex;
+//   justify-content: space-evenly;
+
+//   &__text {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     font-size: 20px;
+//     width: 25%;
+//   }
+
+//   &__menu {
+//     //   display: flex;
+//     //   justify-content: center;
+//     width: 518px;
+//     height: 100%;
+//     max-height: 120vh;
+//     overflow: auto;
+//   }
+// }
+
+.restaurant-page {
+  min-height: 85vh;
+  background-color: rgba(#fff, 0.8);
+  padding: 3rem 3rem;
+  border-radius: 1rem;
+  margin: 10rem 10rem;
+}

@@ -1,0 +1,49 @@
+.restaurant-item {
+  background-color: rgba(#007cc7, 0.6);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0.5rem 0.7rem 1rem rgba(#000, 0.3);
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__container-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  &__nameRO {
+    font-size: 1.6rem;
+  }
+
+  &__nameENG {
+    font-size: 1.4rem;
+  }
+
+  &__alergens {
+    font-size: 1.4rem;
+  }
+
+  &__descriptionRO {
+    font-size: 1.2rem;
+  }
+
+  &__descriptionENG {
+    font-size: 1.2rem;
+  }
+
+  &__quantity {
+    font-size: 1.4rem;
+  }
+
+  &__price {
+    font-size: 1.6rem;
+  }
+}

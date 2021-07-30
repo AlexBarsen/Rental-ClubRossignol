@@ -1,0 +1,24 @@
+.buttons {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.register-button {
+  font-size: 1.3rem;
+  padding: 0.5rem 2rem;
+  text-decoration: none;
+  border-radius: 0.6rem;
+  background-color: #4285f4;
+  color: white;
+
+  &:hover {
+    background-color: #357ae8;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}

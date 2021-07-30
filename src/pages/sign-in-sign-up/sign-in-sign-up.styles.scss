@@ -1,0 +1,16 @@
+.sign-in-and-sign-up {
+  &-page {
+    min-height: 80vh;
+  }
+
+  &--container {
+    background-color: rgba(#fff, 0.7);
+    border-radius: 0.5rem;
+    padding: 3rem;
+    display: flex;
+    flex-direction: row;
+    width: 85rem;
+    margin: 5rem auto;
+    justify-content: space-around;
+  }
+}

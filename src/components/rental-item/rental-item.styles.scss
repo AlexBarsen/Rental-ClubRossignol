@@ -1,0 +1,40 @@
+.rental-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 30rem;
+  width: 30rem;
+  background-color: rgba(#fff, 0.8);
+  border: 0.1rem solid black;
+  border-radius: 0.8rem;
+  box-shadow: 0.2rem 0.2rem 0.5rem 0 #656565;
+  margin: 2rem 3rem;
+
+  &:hover &__icon {
+    transform: scale(1.1) translateY(-1rem);
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 2rem;
+  }
+
+  &__icon {
+    height: 13rem;
+    transition: all 0.3s;
+  }
+
+  &__footer {
+    font-size: 2rem;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+
+    &--price {
+    }
+
+    &--modal-btn {
+    }
+  }
+}

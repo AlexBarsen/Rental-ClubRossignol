@@ -1,0 +1,36 @@
+.contact-page {
+  background-color: rgba(#fff, 0.8);
+  width: 105rem;
+  padding: 3rem;
+  border-radius: 0.5rem;
+  margin: 5rem auto;
+
+  &__heading {
+    align-self: flex-start;
+    font-size: 3rem;
+  }
+}
+
+.google-maps {
+  &__address {
+    font-size: 1.6rem;
+  }
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper-2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.phone-number {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.6rem;
+}

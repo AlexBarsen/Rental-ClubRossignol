@@ -1,0 +1,22 @@
+.footer {
+  background-color: rgba($color-blue-dark, 0.67);
+  display: flex;
+  //   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__logo-container {
+    padding: 1rem;
+    width: 13rem;
+  }
+
+  &__logo {
+    width: 100%;
+  }
+
+  &__legal {
+    color: #fff;
+    font-size: 1.6rem;
+    padding: 1rem;
+  }
+}

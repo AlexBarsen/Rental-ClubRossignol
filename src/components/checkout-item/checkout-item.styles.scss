@@ -1,0 +1,77 @@
+.checkout-item {
+  background-color: rgba(#fff, 0.8);
+  border-radius: 1rem;
+  width: 100%;
+  font-size: 1.4rem;
+  justify-items: center;
+  align-items: center;
+
+  display: grid;
+  grid-template-columns: 25% 12% 12% 26% 20% 5%;
+
+  &--product-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+
+  &__icon {
+    height: 10rem;
+  }
+
+  &__name {
+    font-size: 1.4rem;
+  }
+
+  &__firstName {
+    font-size: 1.8rem;
+  }
+
+  &__lastName {
+    font-size: 1.8rem;
+  }
+
+  &__details {
+    position: relative;
+    display: flex;
+    justify-self: stretch;
+    align-items: center;
+    flex-direction: column;
+
+    &--shoeSize {
+    }
+
+    // &--edit-icon {
+    //   width: 2.5rem;
+    //   position: absolute;
+    //   z-index: 0;
+    //   right: 20%;
+    //   top: 0rem;
+    //   transition: all 0.2s;
+
+    // &:hover {
+    //   cursor: pointer;
+    //   transform: translateY(-0.2rem);
+    // }
+
+    // &:active {
+    //   transform: translateY(0rem);
+    // }
+    // }
+  }
+
+  &--highlight {
+    font-size: 1.6rem;
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    justify-content: space-around;
+  }
+
+  &__remove-button {
+    cursor: pointer;
+  }
+}
