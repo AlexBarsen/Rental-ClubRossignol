@@ -17,7 +17,7 @@ class RestaurantPage extends React.Component {
   render() {
     const { restaurantMenu } = this.state;
     return (
-      <div className="restaurant-page">
+      <div className="restaurant-page background">
         {restaurantMenu.map(({ categoryID, ...otherRentalProps }) => (
           <RestaurantCategory key={categoryID} {...otherRentalProps} />
         ))}

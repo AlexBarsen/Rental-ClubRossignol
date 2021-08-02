@@ -9,7 +9,7 @@ import BookingReviews from "../../components/booking-reviews/booking-reviews.com
 import SocialMedia from "../../components/social-media/social-media.component";
 
 const HomePage = () => (
-  <div className="homepage">
+  <div className="homepage background">
     <div className="social-media">
       <SocialMedia />
     </div>
@@ -28,6 +28,10 @@ const HomePage = () => (
       <Gallery />
       <BookingReviews />
     </div>
+
+    <h1 className="heading">
+      Club Rossignol iti pune la dispozitie urmatoarele:
+    </h1>
 
     <div className="features-container">
       {FeaturesData.map((feature) => (

@@ -8,7 +8,11 @@ import HomePage from "./pages/homepage/homepage.component";
 import RentalPage from "./pages/rental/rental.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUp from "./pages/sign-in-sign-up/sign-in-sign-up-component";
-import { auth, createUserPorfileDocument } from "./firebase/firebase.utils";
+import {
+  auth,
+  createUserPorfileDocument,
+  // addCollectionAndDocuments,
+} from "./firebase/firebase.utils";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
@@ -17,11 +21,13 @@ import RestaurantPage from "./pages/restaurant/restaurant.component";
 import ContactPage from "./pages/contact/contact.component";
 import Footer from "./components/footer/footer.component";
 
+// import { selectRentalsForPreview } from "./redux/rental/rental.selectors";
+
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    // destructre setCurrentUser from this.props
+    // destructre setCurrentUser + the rentalArray from this.props
     const { setCurrentUser } = this.props;
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
@@ -42,6 +48,13 @@ class App extends React.Component {
       } else {
         // set currentUser to null if the user logs out
         setCurrentUser(null);
+        // addCollectionAndDocuments(
+        //   "rentals",
+        //   rentalsArray.map(({ categoryName, products }) => ({
+        //     categoryName,
+        //     products,
+        //   }))
+        // );
       }
     });
   }
@@ -86,6 +99,8 @@ class App extends React.Component {
 // mapStateToProps gives  access to the state(rootReducer)
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
+  // with connect store rentals from redux into rentalsArray
+  // rentalsArray: selectRentalsForPreview,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -13,7 +13,7 @@ import {
 // import "./checkout.styles.scss";
 
 const CheckoutPage = ({ cartItems, total, currentUser }) => (
-  <div className="checkout-page">
+  <div className="checkout-page background">
     <div className="checkout-page__header">
       <div className="checkout-page__header--block">
         <span>Produs</span>

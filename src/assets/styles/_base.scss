@@ -45,10 +45,14 @@ body {
 body {
   padding: 2rem 4rem;
   background-image: linear-gradient(
-      to right bottom,
-      rgba($color-blue-light-1, 0.5),
-      rgba($color-blue-light-2, 0.7)
-    ),
-    url(../img/view.jpg);
+    to right bottom,
+    rgba($color-blue-light-1, 0.5),
+    rgba($color-blue-light-2, 0.7)
+  );
+  // url(../img/view.jpg);
   background-size: cover;
+}
+
+.background {
+  background-color: rgba($color-blue-dark, 0.2);
 }

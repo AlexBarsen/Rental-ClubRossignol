@@ -18,8 +18,13 @@ export const createUserPorfileDocument = async (userAuth, additionalData) => {
   // get a reference at /users/userAuth.uid
   const userRef = firestore.doc(`users/${userAuth.uid}`);
 
+  // const collectionRef = firestore.collection("users");
+
   // get back a snapShot which tells us if the userAuth.uid
   const snapShot = await userRef.get();
+
+  // const collectionSnapshot = await collectionRef.get();
+  // console.log({ collection: collectionSnapshot.docs.map((doc) => doc.data()) });
 
   // snapShot.exists tells us if a user with that ID already exists (true or false)
   if (!snapShot.exists) {
@@ -40,6 +45,42 @@ export const createUserPorfileDocument = async (userAuth, additionalData) => {
   }
 
   return userRef;
+};
+
+// functions which adds rental.data.js to firestore
+export const addCollectionAndDocuments = async (
+  CollectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = firestore.collection(CollectionKey);
+
+  const batch = firestore.batch();
+
+  console.log(objectsToAdd);
+  objectsToAdd.forEach((obj) => {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj);
+  });
+
+  // returns a promise => return null if it succedes
+  return await batch.commit();
+};
+
+export const convertRentalsSnapshotToMap = (rentals) => {
+  const transformedRentals = rentals.docs.map((doc) => {
+    const { categoryName, products } = doc.data();
+
+    return {
+      id: doc.id,
+      categoryName,
+      products,
+    };
+  });
+
+  return transformedRentals.reduce((accumulator, rentals) => {
+    accumulator[rentals.categoryName.toLowerCase()] = rentals;
+    return accumulator;
+  }, {});
 };
 
 // initialize firebase

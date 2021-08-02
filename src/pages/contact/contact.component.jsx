@@ -6,7 +6,7 @@ import GoogleApiWrapper from "../../components/google-maps/google-maps.component
 // import "./contact.styles.scss";
 
 const ContactPage = () => (
-  <div className="contact-page">
+  <div className="contact-page background">
     <div className="wrapper-2">
       <h1 className="contact-page__heading">Contacteaza-ne</h1>
       <div className="phone-number">

@@ -1,13 +1,11 @@
 import React from "react";
 
-import Image1 from "../../assets/img/front.jpg";
+import Image1 from "../../assets/fata.jpg";
 import Image2 from "../../assets/img/terrace.jpg";
-import Image3 from "../../assets/img/room-1.jpg";
-import Image4 from "../../assets/img/room-2.jpg";
-import Image5 from "../../assets/img/bathroom.jpg";
-import Image6 from "../../assets/img/room-upstairs.jpg";
-
-// import "./image-modal-styles.scss";
+import Image3 from "../../assets/terasa2.jpg";
+import Image4 from "../../assets/apreski.jpg";
+import Image5 from "../../assets/img/room-2.jpg";
+import Image6 from "../../assets/camera.jpg";
 
 class ImageModal extends React.Component {
   constructor(props) {

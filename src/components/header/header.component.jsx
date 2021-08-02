@@ -76,7 +76,7 @@ function Header({
             <ul>
               <li>
                 {currentUser ? (
-                  <Link
+                  <div
                     className="header__options--option"
                     onClick={() => auth.signOut()}
                   >
@@ -88,9 +88,9 @@ function Header({
                     <span>
                       {currentUser.firstName + " " + currentUser.lastName}
                     </span>
-                  </Link>
+                  </div>
                 ) : (
-                  <Link
+                  <div
                     className="header__options--option header__options--option--SignIn"
                     onClick={toggleUserSignInHidden}
                   >
@@ -100,7 +100,7 @@ function Header({
                       className="mobile-menu__dropdown__icon"
                     />
                     SIGN IN / REGISTER
-                  </Link>
+                  </div>
                 )}
               </li>
 
@@ -166,7 +166,7 @@ function Header({
 
               <li>
                 {currentUser ? (
-                  <Link
+                  <div
                     className="header__options--option"
                     onClick={() => auth.signOut()}
                   >
@@ -176,7 +176,7 @@ function Header({
                       className="mobile-menu__dropdown__icon"
                     />
                     SIGN OUT
-                  </Link>
+                  </div>
                 ) : null}
               </li>
             </ul>
@@ -238,7 +238,7 @@ function Header({
               </div>
             </Link>
           ) : (
-            <Link
+            <div
               className="header__options--option header__options--option--SignIn"
               onClick={toggleUserSignInHidden}
             >
@@ -248,7 +248,7 @@ function Header({
                 className="header__icon"
               />
               SIGN IN / REGISTER
-            </Link>
+            </div>
           )}
 
           <CartIcon />
