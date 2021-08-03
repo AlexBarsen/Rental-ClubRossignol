@@ -1,20 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
 
 import WithSpinner from "../../components/with-spinner/with-spinner.component";
 
-import RentalCategory from "../../components/rental-category/rental-category";
 import { updateRentals } from "../../redux/rental/rental.actions";
 
-import { selectRentalsForPreview } from "../../redux/rental/rental.selectors";
+import RentalOverview from "../../components/rental-overview/rental-overview";
 
 import {
   firestore,
   convertRentalsSnapshotToMap,
 } from "../../firebase/firebase.utils";
 
-const RentalCateogryWithSpiner = WithSpinner(RentalCategory);
+const RentalOverviewWithSpiner = WithSpinner(RentalOverview);
 
 class RentalPage extends React.Component {
   state = {
@@ -37,15 +35,10 @@ class RentalPage extends React.Component {
   render() {
     const { rentals } = this.props;
     const { loading } = this.state;
+
     return (
       <div className="rental-page background">
-        {rentals.map(({ id, ...otherRentalProps }) => (
-          <RentalCateogryWithSpiner
-            isLoading={loading}
-            key={id}
-            {...otherRentalProps}
-          />
-        ))}
+        <RentalOverviewWithSpiner rentals={rentals} isLoading={loading} />
       </div>
     );
   }
@@ -55,8 +48,4 @@ const mapDispatchToProps = (dispatch) => ({
   updateRentals: (rentalsMap) => dispatch(updateRentals(rentalsMap)),
 });
 
-const mapStateToProps = createStructuredSelector({
-  rentals: selectRentalsForPreview,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RentalPage);
+export default connect(null, mapDispatchToProps)(RentalPage);

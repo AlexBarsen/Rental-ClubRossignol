@@ -1,0 +1,14 @@
+.rental-category {
+  &__title {
+    font-size: 3.6rem;
+    display: flex;
+    justify-content: center;
+    padding-top: 0.8rem;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+}
