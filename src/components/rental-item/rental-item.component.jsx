@@ -2,8 +2,7 @@ import React from "react";
 
 import RentalModal from "../rental-modal/rental-modal.component";
 
-// import "./rental-item.styles.scss";
-
+// * pass properties into Component
 const RentalItem = ({ item }) => {
   const { name, price, icon } = item;
   return (

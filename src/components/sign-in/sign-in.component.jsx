@@ -22,14 +22,14 @@ class SignIn extends React.Component {
     };
   }
 
-  // function which logs the user in
+  // * function which logs the user in
   handleSubmit = async (event) => {
     event.preventDefault();
 
     const { email, password } = this.state;
 
     try {
-      // function from the auth libary which logs in with the email and password
+      // * function from the auth libary sign the user in with the email and password
       await auth.signInWithEmailAndPassword(email, password);
       this.setState({ email: "", password: "" });
     } catch (error) {
@@ -87,9 +87,7 @@ class SignIn extends React.Component {
             <CustomButton type="submit" signInNormal>
               Sign In
             </CustomButton>
-            {/* <CustomButton onClick={signInWithGoogle} signInGoogle>
-              Sign in with Google
-            </CustomButton> */}
+
             {this.props.type === "dropdown" ? (
               <Link
                 to="signIn"
@@ -106,13 +104,14 @@ class SignIn extends React.Component {
   }
 }
 
+// * connect to Redux state
 const mapStateToProps = createStructuredSelector({
   userSignInHidden: selectUserSignInHidden,
 });
 
+// * dispatch function to Redux store
 const mapDispatchToProps = (dispatch) => ({
   toggleUserSignInHidden: () => dispatch(toggleUserSignInHidden()),
 });
 
-// connect() = function that allows the acces to the state -> rootReducer
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

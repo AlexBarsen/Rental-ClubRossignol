@@ -1,7 +1,5 @@
 import React from "react";
 
-// import "./homepage.styles.scss";
-
 import Feature from "../../components/feature/feature.component";
 import FeaturesData from "../../components/feature/features";
 import Gallery from "../../components/gallery/gallery.component";
@@ -38,15 +36,6 @@ const HomePage = () => (
         <Feature key={feature.id} feature={feature} />
       ))}
     </div>
-
-    {/* <div className="rental">
-      <h1 className="rental--heading">
-        Inchieriere ecjipamente Ski si Snowboard online
-      </h1>
-      La noi puteti inchiria echipamente pentru Ski si Snowboard direct online,
-      iar a doua zi de dimineata te asptetam sa le ridici de la centrul nostru
-      de inchirieri
-    </div> */}
   </div>
 );
 

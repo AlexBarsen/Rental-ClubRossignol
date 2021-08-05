@@ -4,10 +4,7 @@ import { connect } from "react-redux";
 import { clearItemFromCart } from "../../redux/cart/cart.actions";
 import RentalModal from "../rental-modal/rental-modal.component";
 
-// import EditIcon from "../../assets/svg/edit.svg";
-
-// import "./checkout-item.styles.scss";
-
+// * destructure props from the cartItem
 class CheckoutItem extends React.Component {
   render() {
     const {
@@ -98,6 +95,7 @@ class CheckoutItem extends React.Component {
   }
 }
 
+// * dispatch functions to the Redux store
 const mapDispatchToProps = (dispatch) => ({
   clearItem: (item) => dispatch(clearItemFromCart(item)),
 });

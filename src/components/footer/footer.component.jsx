@@ -2,8 +2,6 @@ import React from "react";
 
 import FooterLogo from "../../assets/svg/logo_big_white.svg";
 
-// import "./footer.styles.scss";
-
 const Footer = () => (
   <div className="footer">
     <div className="footer__logo-container">

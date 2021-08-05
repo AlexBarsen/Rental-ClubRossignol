@@ -2,8 +2,6 @@ import React from "react";
 
 import BookingLogo from "../../assets/svg/booking.svg";
 
-// import "./booking-reviews.styles.scss";
-
 const BookingReviews = () => (
   <div className="booking-reviews">
     <img src={BookingLogo} alt="" className="booking-reviews__logo" />

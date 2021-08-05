@@ -1,7 +1,5 @@
 import React from "react";
 
-// import "./social-media.styles.scss";
-
 import FacebookIcon from "../../assets/svg/facebook.svg";
 import InstagramIcon from "../../assets/svg/instagram.svg";
 

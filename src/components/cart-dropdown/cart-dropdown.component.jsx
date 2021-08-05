@@ -11,13 +11,15 @@ import {
 } from "../../redux/cart/cart.selectors";
 import { toggleCartHidden } from "../../redux/cart/cart.actions";
 
-// import "./cart-dropdown.styles.scss";
+// * connect()(Component) will pass "dispatch" as a prop to the Component
+// * 1. either destructure it: const Component = ({ dispatch }) => { }
+// * 2. either call it: this.props.dispatch()
 
-// connect passes dispatch to the component as property if mapDispatchToProps isn't passed in
-// -> access dispatch as a prop to use toggleCartHiden() when we go to "/checkout"
+// * pass properties into Component
 const CartDropdown = ({ cartItems, history, dispatch, total }) => (
   <div className="cart-dropdown">
     <div className="cart-dropdown__item">
+      {/* map over cartItems and render a CartItem component for each with unique keys and the item being passed in as a prop */}
       {cartItems.length ? (
         cartItems.map((cartItem) => (
           <CartItem key={cartItem.id} item={cartItem} />
@@ -43,12 +45,11 @@ const CartDropdown = ({ cartItems, history, dispatch, total }) => (
   </div>
 );
 
+// * connect to Redux state
 const mapStateToProps = createStructuredSelector({
   cartItems: selectCartItems,
   total: selectCartTotal,
 });
 
-// use withRouter() to pass the match history and location -> access to the history prop
-// use history.push() to "redirect" to "/checkout" when we click on the button
-// pass in what comes out of connect()
+// * withRouter() connects the Component to the Router and gives acces to the history, location, match object properties
 export default withRouter(connect(mapStateToProps)(CartDropdown));

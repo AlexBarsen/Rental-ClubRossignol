@@ -1,7 +1,6 @@
 import React from "react";
 
-// import "./custom-button.styles.scss";
-
+// * pass in CustomButton properties into Component
 const CustomButton = ({
   dropdown,
   addToCart,
@@ -15,6 +14,7 @@ const CustomButton = ({
   toggleUserSignInHidden,
   ...otherProps
 }) => (
+  // * add css classes depending on the CustomButton properties
   <button
     className={`${signInGoogle ? "sign-in-google" : ""} ${
       signInNormal ? "sign-in-normal" : ""

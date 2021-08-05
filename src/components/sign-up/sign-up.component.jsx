@@ -1,7 +1,5 @@
 import React from "react";
 
-// import "./sign-up.styles.scss";
-
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 
@@ -21,32 +19,34 @@ class SignUp extends React.Component {
     };
   }
 
-  // function which creates the user with email and password
+  // * function which creates the user with email and password
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    // destructure properties of the state
+    // * destructure properties from state
     const { firstName, lastName, email, phone, password, confirmPassword } =
       this.state;
 
-    // check if password match
+    // * check if password match
     if (password !== confirmPassword) {
       alert("passwords don't match");
       return;
     }
 
     try {
-      // destrucre user of the createUserWithEmailAndPassword()
-      // function which exits on firebase auth
+      // * create new Firebase Authentication account
+      // * destructure user of the createUserWithEmailAndPassword() which exits on auth from firebase
       const { user } = await auth.createUserWithEmailAndPassword(
         email,
         password
       );
 
-      // create user in database
+      // * create document for user in firestore
+      // * also logs user in
+      // * user is redirected due to <Route {currentUser ? <Redirect to="/" : <SignInAndSignUp /> /> }>
       await createUserPorfileDocument(user, { firstName, lastName, phone });
 
-      // set state to initial state
+      // * reset to initial state
       this.setState({
         firstName: "",
         lastName: "",
@@ -60,7 +60,7 @@ class SignUp extends React.Component {
     }
   };
 
-  // update state depending on what user is typing in the FormInput
+  // * handle state change depending on what user is typing in the FormInput
   handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -68,6 +68,7 @@ class SignUp extends React.Component {
   };
 
   render() {
+    // * destructure properties from state
     const { firstName, lastName, email, phone, password, confirmPassword } =
       this.state;
     return (

@@ -1,7 +1,6 @@
 import React from "react";
 
-// import "./menu-item.styles.scss";
-
+// * pass properties into the Component
 const MenuItem = ({ title, imageUrl }) => (
   <div className="menu-item">
     <div

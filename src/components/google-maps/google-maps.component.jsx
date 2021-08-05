@@ -1,6 +1,7 @@
 import React from "react";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 
+// * Styles
 const mapStyles = {
   width: "41.5rem",
   height: "41.5rem",
@@ -12,7 +13,6 @@ const containerStyle = {
   position: "relative",
   width: "41.5rem",
   height: "41.5rem",
-  //   border: "1px solid black",
 };
 
 export class MapContainer extends React.Component {

@@ -17,6 +17,7 @@ class ImageModal extends React.Component {
     };
   }
 
+  // * update state.index
   handleNext = (index) => {
     if (this.state.index === 5) {
       this.setState({ index: 0 });
@@ -25,6 +26,7 @@ class ImageModal extends React.Component {
     }
   };
 
+  // * update state.index
   handlePrevious = () => {
     if (this.state.index === 0) {
       this.setState({ index: 5 });
@@ -33,6 +35,7 @@ class ImageModal extends React.Component {
     }
   };
 
+  // * toggle visible or hidden Modal
   toggleModal = () => {
     this.setState((prevState) => ({ imageModal: !prevState.imageModal }));
 
@@ -43,6 +46,7 @@ class ImageModal extends React.Component {
     }
   };
 
+  // * merge all images into an array
   render() {
     const modalImages = [Image1, Image2, Image3, Image4, Image5, Image6];
 
@@ -58,6 +62,8 @@ class ImageModal extends React.Component {
             alt="Gallery item"
           />
         </div>
+
+        {/* render images from the imageModal[] depending on the state.index */}
         {this.state.imageModal && (
           <div className="image-modal">
             <span className="close" onClick={this.toggleModal}>

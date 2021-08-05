@@ -21,33 +21,29 @@ import RestaurantPage from "./pages/restaurant/restaurant.component";
 import ContactPage from "./pages/contact/contact.component";
 import Footer from "./components/footer/footer.component";
 
-// import { selectRentalsForPreview } from "./redux/rental/rental.selectors";
-
 class App extends React.Component {
-  unsubscribeFromAuth = null;
+  unsubscribeFromAuth = null; // * method which by default is null
 
   componentDidMount() {
-    // destructre setCurrentUser + the rentalArray from this.props
-    const { setCurrentUser } = this.props;
+    const { setCurrentUser } = this.props; // * destructre setCurrentUser + the rentalArray from this.props
+
+    // * auth.onStateChanged() = observer which listens for state changes regarding the user
+    // * -> returns null(user not signed in) / object(user signed in)
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      // * if onAuthStateChanged() returns an object(user singed in)
       if (userAuth) {
-        // creating User in Firestore Database
-        // returned userRef from the function
         const userRef = await createUserPorfileDocument(userAuth);
 
-        // .data() returns a JSON object of the document in the DB
-        // create a currentUser in the state using the properties of the snapShot as well as the ID
-        // => store current logged in user in our state
+        //
         userRef.onSnapshot((snapShot) => {
           setCurrentUser({
             id: snapShot.id,
             ...snapShot.data(),
           });
-        });
+        }); // * using the reference returned by createUserProfileDocument() set’s the  current user in the App’s state by using Redux
       } else {
-        // set currentUser to null if the user logs out
-        setCurrentUser(null);
+        setCurrentUser(null); // * if userAuth doesn't exist (no user signed in) set the currentUser in the Redux state to null
         // addCollectionAndDocuments(
         //   "rentals",
         //   rentalsArray.map(({ categoryName, products }) => ({
@@ -67,15 +63,12 @@ class App extends React.Component {
     return (
       <div>
         <Header />
-        {/* imported Switch from react-router-dom, so that react renders the the first <Route> or
-        <Redirect> that the path matches to*/}
+        {/* </Switch> renders the the first <Route> or <Redirect> that the 'path' matches to*/}
         <Switch>
-          {/* imported Route from react-router-dom, so that different components are rendered
-          when the path changes */}
-          <Route exact path="/" component={HomePage} />
+          {/* <Route> renders the component to which the 'path' matches to */}
+          <Route exact path="/" component={HomePage} />{" "}
           <Route path="/rental" component={RentalPage} />
-          {/* imported Redirect from react-router-dom. We check if a user is present, if it is null
-          it will render the SignInAndSignUp Page, else if a user exists it will redirect to the hompage */}
+          {/* <Redirect> will render the 'path' */}
           <Route
             exact
             path="/signIn"
@@ -83,7 +76,6 @@ class App extends React.Component {
               this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />
             }
           />
-
           <Route exact path="/checkout" component={CheckoutPage} />
           <Route exact path="/restaurant" component={RestaurantPage} />
           <Route exact path="/contact" component={ContactPage} />
@@ -94,20 +86,16 @@ class App extends React.Component {
   }
 }
 
-// mapStateToProps + connect() = use anywhere we need properties from rooReducer
-
-// mapStateToProps gives  access to the state(rootReducer)
+// * mapStateToProps gives access to the Redux state(rootReducer)
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  // with connect store rentals from redux into rentalsArray
   // rentalsArray: selectRentalsForPreview,
 });
 
+// * mapDispatchToProps(dispatch) = function which does a dispatch to the store to execute a function
 const mapDispatchToProps = (dispatch) => ({
-  // dispatch = way for Redux to know that whatever object we pass in is going to be an action object
-  // that it is going to pass to every reducer
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
-// pass mapStateToProps so that it has access to this.props.currentUser
+// * connect() connects the React component with the Redux store
 export default connect(mapStateToProps, mapDispatchToProps)(App);

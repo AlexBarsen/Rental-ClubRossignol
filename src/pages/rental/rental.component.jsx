@@ -25,11 +25,29 @@ class RentalPage extends React.Component {
     const { updateRentals } = this.props;
     const rentalRef = firestore.collection("rentals");
 
-    this.unsubscribeFromSnapshot = rentalRef.onSnapshot(async (snapshot) => {
+    // Observable
+
+    // this.unsubscribeFromSnapshot = rentalRef.onSnapshot(async (snapshot) => {
+    //   const rentalsMap = convertRentalsSnapshotToMap(snapshot);
+    //   updateRentals(rentalsMap);
+    //   this.setState({ loading: false });
+    // });
+
+    // API Call
+
+    rentalRef.get().then((snapshot) => {
       const rentalsMap = convertRentalsSnapshotToMap(snapshot);
       updateRentals(rentalsMap);
       this.setState({ loading: false });
     });
+
+    // REST API (fetch) rental-clubrossingol
+
+    // fetch(
+    //   "https://firestore.googleapis.com/v1/projects/rental-clubrossignol/databases/(default)/documents/rentals"
+    // )
+    //   .then((response) => response.json())
+    //   .then((rentals) => console.log(rentals));
   }
 
   render() {

@@ -3,8 +3,6 @@ import React from "react";
 import ContactForm from "../../components/contact-form/contact-form.component";
 import GoogleApiWrapper from "../../components/google-maps/google-maps.component";
 
-// import "./contact.styles.scss";
-
 const ContactPage = () => (
   <div className="contact-page background">
     <div className="wrapper-2">

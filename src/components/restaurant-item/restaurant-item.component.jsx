@@ -1,7 +1,6 @@
 import React from "react";
 
-// import "./restaurant-item.styles.scss";
-
+// * pass properites into Component and destructure them
 const RestaurantItem = ({ item }) => {
   const {
     nameRO,

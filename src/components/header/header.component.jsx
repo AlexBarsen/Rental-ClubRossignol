@@ -1,27 +1,25 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-// higher order component that let's us modify our component to have acces
-// to things related to Redux
 import { connect } from "react-redux";
+
+import { auth } from "../../firebase/firebase.utils";
 
 import SignInDropdown from "../sign-in-dropdown/sign-in-dropdown.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import CartIcon from "../cart-icon/cart-icon.component";
-import { auth } from "../../firebase/firebase.utils";
 
 import { useDetectOutsideClick } from "./useDetectOutsideClick";
 
+import { createStructuredSelector } from "reselect";
 import {
   selectCurrentUser,
   selectUserSignInHidden,
 } from "../../redux/user/user.selectors";
-
 import { selectCartHidden } from "../../redux/cart/cart.selectors";
+
 import { toggleUserSignInHidden } from "../../redux/user/user.actions";
 
 import Logo from "../../assets/svg/logo.svg";
-
-import { createStructuredSelector } from "reselect";
 import SignOutIcon from "../../assets/svg/logout.svg";
 import UserIcon from "../../assets/svg/user.svg";
 import MenuIcon from "../../assets/svg/menu.svg";
@@ -32,6 +30,7 @@ import ContactIcon from "../../assets/svg/phone.svg";
 import ResturantIcon from "../../assets/svg/spoon-knife.svg";
 import SignInIcon from "../../assets/svg/enter.svg";
 
+// * pass properties into functional Component
 function Header({
   currentUser,
   userSignInHidden,
@@ -46,6 +45,7 @@ function Header({
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const onClick = () => setIsActive(!isActive);
 
+  // * ture/false depending on the screen size -> render normal OR mobile navigation
   const setScreenSize = () => {
     setScreen(document.documentElement.clientWidth < 600);
   };
@@ -58,6 +58,7 @@ function Header({
         <img src={Logo} className="header__logo" alt="logo" />
       </Link>
 
+      {/* render normal or mobile navigation depending on the screen size */}
       {smallScreen ? (
         <div className="mobile-menu">
           <button onClick={onClick} className="mobile-menu--trigger">
@@ -254,26 +255,23 @@ function Header({
           <CartIcon />
         </div>
       )}
-
-      {/* {currentUser != null ? (userSignInHidden = true) : null} */}
+      {/* render Components depending on the state */}
       {userSignInHidden ? null : <SignInDropdown />}
       {cartHidden ? null : <CartDropdown />}
     </div>
   );
 }
 
-// mapStateToProps + connect() = use anywhere we need properties from rooReducer
-
-// mapStateToProps gives  access to the state(rootReducer)
+// * connect to Redux state
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   cartHidden: selectCartHidden,
   userSignInHidden: selectUserSignInHidden,
 });
 
+// * dispatch function to the Redux store
 const mapDispatchToProps = (dispatch) => ({
   toggleUserSignInHidden: () => dispatch(toggleUserSignInHidden()),
 });
 
-// connect() = function that allows the acces to the state -> rootReducer
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

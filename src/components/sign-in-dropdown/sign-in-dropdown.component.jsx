@@ -1,7 +1,5 @@
 import React from "react";
 
-// import "./sign-in-dropdown.styles.scss";
-
 import SignIn from "../sign-in/sign-in.component";
 
 const SignInDropdown = () => (

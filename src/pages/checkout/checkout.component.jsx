@@ -8,10 +8,8 @@ import {
   selectCartItems,
   selectCartTotal,
 } from "../../redux/cart/cart.selectors";
-// import uuid from "react-uuid";
 
-// import "./checkout.styles.scss";
-
+// * pass properties into Component
 const CheckoutPage = ({ cartItems, total, currentUser }) => (
   <div className="checkout-page background">
     <div className="checkout-page__header">
@@ -32,6 +30,7 @@ const CheckoutPage = ({ cartItems, total, currentUser }) => (
       </div>
     </div>
     <div className="checkout-items">
+      {/* map over the cartItems and render a CheckoutItem for each with an unique key and the cartItem passed in as a prop */}
       {cartItems.map((cartItem) => (
         <CheckoutItem key={cartItem.id} cartItem={cartItem} />
       ))}
@@ -57,6 +56,7 @@ const CheckoutPage = ({ cartItems, total, currentUser }) => (
   </div>
 );
 
+// * connect Component to Redux state
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   cartItems: selectCartItems,

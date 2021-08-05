@@ -3,8 +3,6 @@ import React from "react";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 
-// import "./contact-form.styles.scss";
-
 class ContactForm extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +14,7 @@ class ContactForm extends React.Component {
       phone: "",
     };
   }
-
+  // * destructure properties of the Component state
   render() {
     const { firstName, lastName, email, phone } = this.state;
     return (

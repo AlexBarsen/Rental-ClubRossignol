@@ -1,7 +1,6 @@
 import React from "react";
 
-// import "./cart-item.styles.scss";
-
+// * destructure the cartItem and it properties from the props
 const CartItem = ({
   item: { icon, price, name, firstName, lastName, days },
 }) => (

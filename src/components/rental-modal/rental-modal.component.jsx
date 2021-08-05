@@ -4,11 +4,11 @@ import uuid from "react-uuid";
 import { connect } from "react-redux";
 import { DateRange } from "react-date-range";
 
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
-// import "./rental-modal.styles.scss";
+import "react-date-range/dist/styles.css"; // * main css file
+import "react-date-range/dist/theme/default.css"; // * theme css file
 
 import { addItem, editItem } from "../../redux/cart/cart.actions";
+
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 import FixRequiredSelect from "./FixRequiredSelect";
@@ -28,6 +28,7 @@ class RentalModal extends React.Component {
   constructor(props) {
     super(props);
 
+    // * pass props into the state
     this.state = {
       days: this.props.item.days ? this.props.item.days : "",
       name: this.props.item.name ? this.props.item.name : "",
@@ -61,6 +62,7 @@ class RentalModal extends React.Component {
     };
   }
 
+  // * toggle visible OR hidden Modal depeding on the state
   toggleModal = () => {
     this.setState((prevState) => ({ visibleModal: !prevState.visibleModal }));
 
@@ -78,12 +80,14 @@ class RentalModal extends React.Component {
 
     this.toggleModal();
 
+    // * custom configuration for the Date
     const oneDay = 24 * 60 * 60 * 1000;
     const startDate = this.state.dateRangePicker.selection.startDate;
     const endDate = this.state.dateRangePicker.selection.endDate;
     const startDateShort = this.getDate(startDate);
     const endDateShort = this.getDate(endDate);
 
+    // * pass state into item
     const item = {
       name: this.state.name,
       price: this.state.price,
@@ -105,6 +109,7 @@ class RentalModal extends React.Component {
       days: Math.round(Math.abs((startDate - endDate) / oneDay)) + 1,
     };
 
+    // * switch operator for dispatching different actions to the Redux store
     switch (this.props.type) {
       case "add":
         item.id = uuid();
@@ -130,6 +135,7 @@ class RentalModal extends React.Component {
     }
   };
 
+  // * function which updates the state for the "react-select" <Select>
   onChangeInput(selected, props) {
     switch (props.name) {
       case "height":
@@ -152,6 +158,7 @@ class RentalModal extends React.Component {
     }
   }
 
+  // * set the state regarding the selected dates by the user
   handleRangeChange = (newRange) => {
     this.setState({
       dateRangePicker: {
@@ -167,6 +174,7 @@ class RentalModal extends React.Component {
     this.setState({ [name]: value });
   };
 
+  // * get date in DD/MM/YYYY format
   getDate = (date) => {
     const startDay = date.getDate();
     const startMonth = date.getMonth() + 1;
@@ -175,12 +183,13 @@ class RentalModal extends React.Component {
   };
 
   render() {
+    // * date variables
     const startDate = this.state.dateRangePicker.selection.startDate;
     const endDate = this.state.dateRangePicker.selection.endDate;
     const oneDay = 24 * 60 * 60 * 1000;
-
     const days = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
 
+    // * <Select> custom styles
     const customStyles = {
       control: (provided, state) => ({
         ...provided,
@@ -195,16 +204,19 @@ class RentalModal extends React.Component {
 
     return (
       <>
+        {/* render Button depnding on the add prop.type */}
         {this.props.type === "add" ? (
           <CustomButton addToCart onClick={this.toggleModal}>
             ALEGE
           </CustomButton>
         ) : null}
 
+        {/* render Button depnding on the edit prop.type */}
         {this.props.type === "edit" ? (
           <CustomButton editCartItem onClick={this.toggleModal} />
         ) : null}
 
+        {/* render Modal depending on the state */}
         {this.state.visibleModal && (
           <div className="modal">
             <div className="modal__overlay"></div>
@@ -250,6 +262,7 @@ class RentalModal extends React.Component {
                         required
                       />
 
+                      {/* render <FormInput>/<Select> Components depending on the productType */}
                       {this.props.item.productType === "skiSnow" ? (
                         <React.Fragment>
                           <Select
@@ -296,6 +309,7 @@ class RentalModal extends React.Component {
                         </React.Fragment>
                       ) : null}
 
+                      {/* render <FormInput>/<Select> Components depending on the productType */}
                       {this.props.item.productType === "boots" ? (
                         <React.Fragment>
                           <Select
@@ -320,6 +334,7 @@ class RentalModal extends React.Component {
                         </React.Fragment>
                       ) : null}
 
+                      {/* render <FormInput>/<Select> Components depending on the productType */}
                       {this.props.item.productType === "equipment" ? (
                         <React.Fragment>
                           <Select
@@ -415,7 +430,7 @@ class RentalModal extends React.Component {
   }
 }
 
-// dispatch addItem with the item we click on
+// * dispatch function to the Redux store
 const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addItem(item)),
   editItem: (item) => dispatch(editItem(item)),

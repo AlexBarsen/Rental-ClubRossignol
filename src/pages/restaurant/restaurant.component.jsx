@@ -1,10 +1,8 @@
 import React from "react";
 
-// import "./restaurant.styles.scss";
-
 import RestaurantCategory from "../../components/restaurant-category/restaurant-category.component";
 
-import RESTAURANT_DATA from "../../components/restaurant-menu/restaurant_data";
+import RESTAURANT_DATA from "./restaurant_data";
 
 class RestaurantPage extends React.Component {
   constructor(props) {
@@ -18,6 +16,7 @@ class RestaurantPage extends React.Component {
     const { restaurantMenu } = this.state;
     return (
       <div className="restaurant-page background">
+        {/* map over tge restaurant Menu and render RentaurantCategory with an unique key and all other values passed in as props */}
         {restaurantMenu.map(({ categoryID, ...otherRentalProps }) => (
           <RestaurantCategory key={categoryID} {...otherRentalProps} />
         ))}

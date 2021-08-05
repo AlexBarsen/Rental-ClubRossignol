@@ -1,9 +1,8 @@
 import React from "react";
 
-// import "./restaurant-category.styles.scss";
-
 import RestaurantItem from "../../components/restaurant-item/restaurant-item.component";
 
+// * pass properties into Component
 const RestaurantCategory = ({ categoryName, categoryIcon, products }) => (
   <div className="restaurant-category">
     <div className="restaurant-category__header">
@@ -19,6 +18,7 @@ const RestaurantCategory = ({ categoryName, categoryIcon, products }) => (
       </div>
     </div>
     <div className="restaurant-category__preview">
+      {/* map over the products and render RestaurantItem with an unique Key and pass the product as props */}
       {products.map((product) => (
         <RestaurantItem key={product.productID} item={product} />
       ))}

@@ -1,7 +1,5 @@
 import React from "react";
 
-// import "./gallery.styles.scss";
-
 import ImageModal from "../../components/image-modal/image-modal.component";
 
 const Gallery = () => (
