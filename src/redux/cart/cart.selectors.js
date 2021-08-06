@@ -2,19 +2,16 @@
 // if the state doesn't actuallt change, if the state values remain the same
 import { createSelector } from "reselect";
 
-// input selector which gets the whole state as input and only returns part of it
-// in this case it is the cart
+// * select just cart from state
 const selectCart = (state) => state.cart;
 
-// selectCartItems = memoize selector
-// selectCartItems selects the cartItems from the state.cart
+// * select cart items from state
 export const selectCartItems = createSelector(
   [selectCart],
   (cart) => cart.cartItems
 );
 
-// selectCartItemsCount gets the cartItems from selectCartItems and then further
-// returns the reduced cartItems quantity
+// * select just the number of items in the cart
 export const selectCartItemsCount = createSelector(
   [selectCartItems],
   (cartItems) =>
@@ -25,11 +22,13 @@ export const selectCartItemsCount = createSelector(
     )
 );
 
+// * select the value of cartHidden from cart
 export const selectCartHidden = createSelector(
   [selectCart],
   (cart) => cart.cartHidden
 );
 
+// * select the total price of that cart from the cartItems
 export const selectCartTotal = createSelector([selectCartItems], (cartItems) =>
   cartItems.reduce(
     (accumulatedTotal, cartItem) =>

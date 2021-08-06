@@ -30,9 +30,6 @@ export const createUserPorfileDocument = async (userAuth, additionalData) => {
   // * get snapShot of the userRef
   const snapShot = await userRef.get();
 
-  // const collectionSnapshot = await collectionRef.get();
-  // console.log({ collection: collectionSnapshot.docs.map((doc) => doc.data()) });
-
   // * if the Snapshot doesn’t exist, then destructure the email of userAuth() and proceed with creating the user document
   if (!snapShot.exists) {
     const { email } = userAuth;
@@ -53,29 +50,37 @@ export const createUserPorfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-// functions which adds rental.data.js to firestore
+// * function which adds data.js to firestore
 export const addCollectionAndDocuments = async (
   CollectionKey,
   objectsToAdd
 ) => {
+  // * firestore collection reference
   const collectionRef = firestore.collection(CollectionKey);
 
+  // * groups all calls into a single object
   const batch = firestore.batch();
 
-  console.log(objectsToAdd);
+  // * function which creates a document for each object (in data.js) in firestore
   objectsToAdd.forEach((obj) => {
-    const newDocRef = collectionRef.doc();
+    // * reference to document from the collection
+    const newDocRef = collectionRef.doc(); // * firestore will automatically set an ID
+
+    // * create document at 'newDocRef' with the 'object'
     batch.set(newDocRef, obj);
   });
 
-  // returns a promise => return null if it succedes
+  // * batch.commit() returns null if the the .set() succeeds
   return await batch.commit();
 };
 
+// * converts Snapshot object
 export const convertRentalsSnapshotToMap = (rentals) => {
   const transformedRentals = rentals.docs.map((doc) => {
+    // * destructe properties from the document
     const { categoryName, products } = doc.data();
 
+    // * return final object with desired data
     return {
       id: doc.id,
       categoryName,

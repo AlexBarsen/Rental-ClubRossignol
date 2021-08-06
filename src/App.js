@@ -13,23 +13,25 @@ import {
   createUserPorfileDocument,
   // addCollectionAndDocuments,
 } from "./firebase/firebase.utils";
-import { setCurrentUser } from "./redux/user/user.actions";
-import { selectCurrentUser } from "./redux/user/user.selectors";
-import { createStructuredSelector } from "reselect";
+
 import CheckoutPage from "./pages/checkout/checkout.component";
 import RestaurantPage from "./pages/restaurant/restaurant.component";
 import ContactPage from "./pages/contact/contact.component";
 import Footer from "./components/footer/footer.component";
 
+import { createStructuredSelector } from "reselect";
+import { setCurrentUser } from "./redux/user/user.actions";
+import { selectCurrentUser } from "./redux/user/user.selectors";
+// import { selectRentalsArray } from "./redux/rental/rental.selectors";
+
 class App extends React.Component {
   unsubscribeFromAuth = null; // * method which by default is null
 
   componentDidMount() {
-    const { setCurrentUser } = this.props; // * destructre setCurrentUser + the rentalArray from this.props
+    const { setCurrentUser } = this.props; // * destructre setCurrentUser + the rentalsArray from this.props
 
     // * auth.onStateChanged() = observer which listens for state changes regarding the user
     // * -> returns null(user not signed in) / object(user signed in)
-
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       // * if onAuthStateChanged() returns an object(user singed in)
       if (userAuth) {
@@ -44,6 +46,9 @@ class App extends React.Component {
         }); // * using the reference returned by createUserProfileDocument() set’s the  current user in the App’s state by using Redux
       } else {
         setCurrentUser(null); // * if userAuth doesn't exist (no user signed in) set the currentUser in the Redux state to null
+
+        // * function called from firebase.utils which adds our data.js, just with the desired values to firestore
+        // * done just once just once to add data.js, comment it after
         // addCollectionAndDocuments(
         //   "rentals",
         //   rentalsArray.map(({ categoryName, products }) => ({
@@ -89,7 +94,7 @@ class App extends React.Component {
 // * mapStateToProps gives access to the Redux state(rootReducer)
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  // rentalsArray: selectRentalsForPreview,
+  // rentalsArray: selectRentalsArray,
 });
 
 // * mapDispatchToProps(dispatch) = function which does a dispatch to the store to execute a function

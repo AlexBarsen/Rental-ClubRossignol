@@ -15,6 +15,9 @@ import {
 const RentalOverviewWithSpiner = WithSpinner(RentalOverview);
 
 class RentalPage extends React.Component {
+  // * state for <WithSpinner> HOC
+  // * true = render <WithSpinner>
+  // * false = render <RentalOverview>
   state = {
     loading: true,
   };
@@ -22,27 +25,31 @@ class RentalPage extends React.Component {
   unsubscribeFromSnapshot = null;
 
   componentDidMount() {
+    //* destructure dispatch actions
     const { updateRentals } = this.props;
+    // * reference to colllection
     const rentalRef = firestore.collection("rentals");
 
-    // Observable
-
+    // *	Observable = () for publishing values but is not executed until user subscribes
     // this.unsubscribeFromSnapshot = rentalRef.onSnapshot(async (snapshot) => {
     //   const rentalsMap = convertRentalsSnapshotToMap(snapshot);
     //   updateRentals(rentalsMap);
     //   this.setState({ loading: false });
     // });
 
-    // API Call
+    // *  Promised baseed API Call (regular API)
 
     rentalRef.get().then((snapshot) => {
+      // * get Snapshot of the reference
       const rentalsMap = convertRentalsSnapshotToMap(snapshot);
+      // * dispatch to update Redux state
       updateRentals(rentalsMap);
+      // * set state to false after the state is updated
+      // * -> render <RentalOverview>
       this.setState({ loading: false });
     });
 
-    // REST API (fetch) rental-clubrossingol
-
+    // * REST API (fetch)
     // fetch(
     //   "https://firestore.googleapis.com/v1/projects/rental-clubrossignol/databases/(default)/documents/rentals"
     // )
@@ -62,6 +69,7 @@ class RentalPage extends React.Component {
   }
 }
 
+// * dispatch action to Reudx store
 const mapDispatchToProps = (dispatch) => ({
   updateRentals: (rentalsMap) => dispatch(updateRentals(rentalsMap)),
 });
