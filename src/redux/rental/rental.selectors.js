@@ -20,3 +20,9 @@ export const selectRentals = createSelector(
 export const selectRentalsArray = createSelector([selectRentals], (rentals) =>
   rentals ? Object.keys(rentals).map((key) => rentals[key]) : []
 );
+
+// * select isFetching from rental
+export const isRentalFetching = createSelector(
+  [selectRental],
+  (rental) => rental.isFetching
+);

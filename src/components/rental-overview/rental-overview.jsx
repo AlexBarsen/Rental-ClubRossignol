@@ -10,6 +10,7 @@ import RentalCategory from "../rental-category/rental-category.component";
 const RentalOverview = ({ rentalsArray }) => (
   <div className="rental-overview">
     {/* map over the rentals and render the RentalCategory while passing in porps */}
+    {console.log(rentalsArray)}
     {rentalsArray.map(({ id, categoryName, products }) => (
       <RentalCategory
         key={id}

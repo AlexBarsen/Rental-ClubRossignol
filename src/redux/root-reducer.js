@@ -6,19 +6,20 @@ import userReducer from "./user/user.reducer";
 import cartReducer from "./cart/cart.reducer";
 import rentalReducer from "./rental/rental.reducer";
 
-// config redux-persist -> put in whitelist the reducers that will be stored in the "persist-storage"
+// * pesist configuration
+// * whitelist = what should be saved in storage
 const persistConfig = {
   key: "root",
   storage,
   whitelist: ["cart"],
 };
 
-// use combineReducer() to combine all the reducers into a rootReducer
+// * combineReducer() combines all reducers into a rootReducer
 const rootReducer = combineReducers({
   user: userReducer,
   cart: cartReducer,
   rental: rentalReducer,
 });
 
-// export modifed version of root reducers with persistance capabilities
+// * export modifed version of rootReducer with persistance capabilities
 export default persistReducer(persistConfig, rootReducer);

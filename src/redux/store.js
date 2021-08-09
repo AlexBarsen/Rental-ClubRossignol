@@ -1,18 +1,18 @@
-// add middleware to our store to catch actions and display them when they get fired/dispatched
-// middleware = function that receive actions and do something with them -> pass them to the rootReducer
+// * middlewares catch actions and does something with them when they get fired/dispatched
 import { createStore, applyMiddleware } from "redux";
-// add persistance to the App so on refresh the redux state won't reset
-// import { presistStore } from "redux-persist";
-// logger = catches the action and console.logs it
+
+// * logger = middleware that catches the actions and console.logs it
 import logger from "redux-logger";
 
+import thunk from "redux-thunk";
+
 import rootReducer from "./root-reducer";
-import persistStore from "redux-persist/es/persistStore";
+import { persistStore } from "redux-persist";
 
-const middlewares = [logger];
+const middlewares = [logger, thunk];
 
-// creating store with rootReducer and middlewares
+// * creating store with rootReducer and middlewares
 export const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
-// create persisted version of the store
+// * persisted version of store
 export const persistor = persistStore(store);
