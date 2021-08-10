@@ -3,7 +3,7 @@ import React from "react";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 
-import { auth, createUserPorfileDocument } from "../../firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 
 class SignUp extends React.Component {
   constructor() {
@@ -44,7 +44,7 @@ class SignUp extends React.Component {
       // * create document for user in firestore
       // * also logs user in
       // * user is redirected due to <Route {currentUser ? <Redirect to="/" : <SignInAndSignUp /> /> }>
-      await createUserPorfileDocument(user, { firstName, lastName, phone });
+      await createUserProfileDocument(user, { firstName, lastName, phone });
 
       // * reset to initial state
       this.setState({

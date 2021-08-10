@@ -17,7 +17,10 @@ import {
 } from "../../redux/user/user.selectors";
 import { selectCartHidden } from "../../redux/cart/cart.selectors";
 
-import { toggleUserSignInHidden } from "../../redux/user/user.actions";
+import {
+  toggleUserSignInHidden,
+  signOutStart,
+} from "../../redux/user/user.actions";
 
 import Logo from "../../assets/svg/logo.svg";
 import SignOutIcon from "../../assets/svg/logout.svg";
@@ -36,6 +39,7 @@ function Header({
   userSignInHidden,
   cartHidden,
   toggleUserSignInHidden,
+  signOutStart,
 }) {
   const [smallScreen, setScreen] = useState(
     document.documentElement.clientWidth < 600
@@ -79,7 +83,7 @@ function Header({
                 {currentUser ? (
                   <div
                     className="header__options--option"
-                    onClick={() => auth.signOut()}
+                    onClick={signOutStart}
                   >
                     <img
                       src={UserIcon}
@@ -169,7 +173,7 @@ function Header({
                 {currentUser ? (
                   <div
                     className="header__options--option"
-                    onClick={() => auth.signOut()}
+                    onClick={signOutStart}
                   >
                     <img
                       src={SignOutIcon}
@@ -224,10 +228,7 @@ function Header({
           </Link>
 
           {currentUser ? (
-            <Link
-              className="header__options--option"
-              onClick={() => auth.signOut()}
-            >
+            <Link className="header__options--option" onClick={signOutStart}>
               <img src={UserIcon} alt="User Icon" className="header__icon" />
               <div className="header__options--user">
                 <span className="header__options--user header__options--user__visible">
@@ -272,6 +273,7 @@ const mapStateToProps = createStructuredSelector({
 // * dispatch function to the Redux store
 const mapDispatchToProps = (dispatch) => ({
   toggleUserSignInHidden: () => dispatch(toggleUserSignInHidden()),
+  signOutStart: () => dispatch(signOutStart()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

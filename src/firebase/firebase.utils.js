@@ -20,11 +20,13 @@ firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-// * createUserProfileDocument() = async await function which creates a new user if it doesn’t already exists
-export const createUserPorfileDocument = async (userAuth, additionalData) => {
+// * createUserProfileDocument() = async await function which:
+// * 1. returns the user reference (userRef) if the user exists
+// * 2. creates user document and returns reference if the doesn't
+export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
-  // * get a reference at /users/userAuth.uid (reference the user colllection)
+  // * get a reference at /users/userAuth.uid (reference the user document)
   const userRef = firestore.doc(`users/${userAuth.uid}`);
 
   // * get snapShot of the userRef
@@ -94,12 +96,16 @@ export const convertRentalsSnapshotToMap = (rentals) => {
   }, {});
 };
 
-// * googleSignIn with PopUp
-// store googleAuthProvider
-// const provider = new firebase.auth.GoogleAuthProvider();
-// provider.setCustomParameters({ prompt: "select_account" });
-
-// function for signing in with GooglePopup -> will be used in sign-in.component
-// export const signInWithGoogle = () => auth.signInWithPopup(provider);
+// * function which get's the current signed in user
+// * 1. returns user object if singed in
+// * 2. returns null(reject) if used isn't signed in
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+};
 
 export default firebase;

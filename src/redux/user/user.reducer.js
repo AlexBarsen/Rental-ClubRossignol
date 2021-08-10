@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 // * reducers take in a current state + action -> return a new state
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case UserActionTypes.EMAIL_SIGN_IN_SUCCESS:
+    case UserActionTypes.SIGN_IN_SUCCESS:
       return {
         ...state,
         currentUser: action.payload,
@@ -22,7 +22,14 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         userSignInHidden: !state.userSignInHidden,
       };
-    case UserActionTypes.EMAIL_SIGN_IN_FAILURE:
+    case UserActionTypes.SIGN_OUT_SUCCESS:
+      return {
+        ...state,
+        currentUser: null,
+        error: null,
+      };
+    case UserActionTypes.SIGN_IN_FAILURE:
+    case UserActionTypes.SIGN_OUT_FAILURE:
       return {
         ...state,
         error: action.payload,
