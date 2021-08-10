@@ -4,25 +4,29 @@ import { UserActionTypes } from "./user.types";
 const INITIAL_STATE = {
   currentUser: null,
   userSignInHidden: true,
+  error: null,
 };
 
 // * reducers take in a current state + action -> return a new state
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case UserActionTypes.SET_CURRENT_USER:
+    case UserActionTypes.EMAIL_SIGN_IN_SUCCESS:
       return {
         ...state,
         currentUser: action.payload,
+        error: null,
         userSignInHidden: true,
       };
     case UserActionTypes.TOGGLE_USER_SIGN_IN_HIDDEN:
       return {
         ...state,
-        // make hidden the opposite of it onClick
         userSignInHidden: !state.userSignInHidden,
       };
-
-    // return the state passed in if there is no action to be done
+    case UserActionTypes.EMAIL_SIGN_IN_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }

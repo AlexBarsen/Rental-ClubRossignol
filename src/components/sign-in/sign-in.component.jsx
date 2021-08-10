@@ -1,11 +1,10 @@
 import React from "react";
 
-// import "./sign-in.styles.scss";
-
 import FormInput from "../../components/form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 
-import { auth } from "../../firebase/firebase.utils";
+import { emailSignInStart } from "../../redux/user/user.actions";
+
 import { Link } from "react-router-dom";
 import { selectUserSignInHidden } from "../../redux/user/user.selectors";
 import { toggleUserSignInHidden } from "../../redux/user/user.actions";
@@ -25,16 +24,11 @@ class SignIn extends React.Component {
   // * function which logs the user in
   handleSubmit = async (event) => {
     event.preventDefault();
-
+    // * destructure dipsatch from props
+    const { emailSignInStart } = this.props;
     const { email, password } = this.state;
 
-    try {
-      // * function from the auth libary sign the user in with the email and password
-      await auth.signInWithEmailAndPassword(email, password);
-      this.setState({ email: "", password: "" });
-    } catch (error) {
-      console.log(error);
-    }
+    emailSignInStart(email, password);
   };
 
   // update state depending on what user is typing in the FormInput
@@ -112,6 +106,8 @@ const mapStateToProps = createStructuredSelector({
 // * dispatch function to Redux store
 const mapDispatchToProps = (dispatch) => ({
   toggleUserSignInHidden: () => dispatch(toggleUserSignInHidden()),
+  emailSignInStart: (email, password) =>
+    dispatch(emailSignInStart({ email, password })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

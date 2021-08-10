@@ -30,34 +30,34 @@ class App extends React.Component {
   componentDidMount() {
     const { setCurrentUser } = this.props; // * destructre setCurrentUser + the rentalsArray from this.props
 
-    // * auth.onStateChanged() = observer which listens for state changes regarding the user
-    // * -> returns null(user not signed in) / object(user signed in)
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      // * if onAuthStateChanged() returns an object(user singed in)
-      if (userAuth) {
-        const userRef = await createUserPorfileDocument(userAuth);
+    // // * auth.onStateChanged() = observer which listens for state changes regarding the user
+    // // * -> returns null(user not signed in) / object(user signed in)
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+    //   // * if onAuthStateChanged() returns an object(user singed in)
+    //   if (userAuth) {
+    //     const userRef = await createUserPorfileDocument(userAuth);
 
-        //
-        userRef.onSnapshot((snapShot) => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(),
-          });
-        }); // * using the reference returned by createUserProfileDocument() set’s the  current user in the App’s state by using Redux
-      } else {
-        setCurrentUser(null); // * if userAuth doesn't exist (no user signed in) set the currentUser in the Redux state to null
+    //     //
+    //     userRef.onSnapshot((snapShot) => {
+    //       setCurrentUser({
+    //         id: snapShot.id,
+    //         ...snapShot.data(),
+    //       });
+    //     }); // * using the reference returned by createUserProfileDocument() set’s the  current user in the App’s state by using Redux
+    //   } else {
+    //     setCurrentUser(null); // * if userAuth doesn't exist (no user signed in) set the currentUser in the Redux state to null
 
-        // * function called from firebase.utils which adds our data.js, just with the desired values to firestore
-        // * done just once just once to add data.js, comment it after
-        // addCollectionAndDocuments(
-        //   "rentals",
-        //   rentalsArray.map(({ categoryName, products }) => ({
-        //     categoryName,
-        //     products,
-        //   }))
-        // );
-      }
-    });
+    //     // * function called from firebase.utils which adds our data.js, just with the desired values to firestore
+    //     // * done just once just once to add data.js, comment it after
+    //     // addCollectionAndDocuments(
+    //     //   "rentals",
+    //     //   rentalsArray.map(({ categoryName, products }) => ({
+    //     //     categoryName,
+    //     //     products,
+    //     //   }))
+    //     // );
+    //   }
+    // });
   }
 
   componentWillUnmount() {
