@@ -1,6 +1,5 @@
 import RentalActionTypes from "./rental.types";
 
-// * initialize state
 const INITIAL_STATE = {
   rentals: null,
   isFetching: false,

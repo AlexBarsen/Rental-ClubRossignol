@@ -10,61 +10,82 @@ import {
   signInFailure,
   signOutSuccess,
   signOutFailure,
+  signUpFailure,
+  signUpSuccess,
 } from "./user.actions";
 import { UserActionTypes } from "./user.types";
 
-// * function* which returns the userSnapshot and logs him in
+// * other functionality
 export function* getSnapshotFromUserAuth(userAuth, additionalData) {
   try {
-    // * createUserProfileDocument returns the user reference
     const userRef = yield call(
-      createUserProfileDocument,
+      createUserProfileDocument, // * returns user reference
       userAuth,
       additionalData
     );
-    // * get userSnapshot from the reference
-    const userSnapshot = yield userRef.get();
-    // * dispatch SignInSuccess() while destructuring the id of the user + additionalData
+
+    const userSnapshot = yield userRef.get(); // * get userSnapshot
+
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
   } catch (error) {
     yield put(signInFailure(error));
   }
 }
 
-// * function* which signs the user in with email and password
+export function* isUserAuthenticated() {
+  try {
+    const userAuth = yield getCurrentUser(); // * returns null or obj
+
+    if (!userAuth) return;
+
+    yield getSnapshotFromUserAuth(userAuth); // * return userSnapshot
+  } catch (error) {
+    yield put(signInFailure(error));
+  }
+}
+
+// * signUp
+export function* emailSignUp({
+  payload: { email, password, firstName, lastName, phone },
+}) {
+  try {
+    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+
+    yield put(
+      signUpSuccess({ user, additionalData: { firstName, lastName, phone } })
+    );
+  } catch (error) {
+    yield put(signUpFailure(error));
+  }
+}
+
+export function* signInAfterSignUp({ payload: { user, additionalData } }) {
+  yield getSnapshotFromUserAuth(user, additionalData);
+}
+
+// * signIn
 export function* signInWithEmail({ payload: { email, password } }) {
   try {
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
-    // * call another generating ()
-    yield getSnapshotFromUserAuth(user);
+
+    yield getSnapshotFromUserAuth(user); // *return userSnapshot
   } catch (error) {
     yield put(signInFailure(error));
   }
 }
 
-// * function* which checks if the user is signed in or not
-export function* isUserAuthenticated() {
-  try {
-    // * returns user object or null
-    const userAuth = yield getCurrentUser();
-    if (!userAuth) return;
-    // * call generator function if a userAuth object exists
-    yield getSnapshotFromUserAuth(userAuth);
-  } catch (error) {
-    yield put(signInFailure(error));
-  }
-}
-
+// *signOut
 export function* signOut() {
   try {
     yield auth.signOut();
+
     yield put(signOutSuccess());
   } catch (error) {
     yield put(signOutFailure(error));
   }
 }
 
-// * generator function which fires the EMAIL_SIGN_IN_START action and calls signInWithEmail()
+// * generator functions catch the dispatches and fire other functions*
 export function* onEmailSignInStart() {
   yield takeLatest(UserActionTypes.EMAIL_SIGN_IN_START, signInWithEmail);
 }
@@ -77,11 +98,22 @@ export function* onSignOutStart() {
   yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
 }
 
+export function* onSignUpStart() {
+  yield takeLatest(UserActionTypes.EMAIL_SIGN_UP_START, emailSignUp);
+}
+
+// * SignIn the user after SignUp
+export function* onSignUpSuccess() {
+  yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
+}
+
 // * export userSagas functions()
 export function* userSagas() {
   yield all([
     call(onEmailSignInStart),
     call(isUserAuthenticated),
     call(onSignOutStart),
+    call(onSignUpStart),
+    call(onSignUpSuccess),
   ]);
 }

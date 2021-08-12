@@ -1,9 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 
-import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
+import { emailSignUpStart } from "../../redux/user/user.actions";
 
 class SignUp extends React.Component {
   constructor() {
@@ -23,6 +24,8 @@ class SignUp extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
 
+    const { emailSignUpStart } = this.props;
+
     // * destructure properties from state
     const { firstName, lastName, email, phone, password, confirmPassword } =
       this.state;
@@ -33,31 +36,7 @@ class SignUp extends React.Component {
       return;
     }
 
-    try {
-      // * create new Firebase Authentication account
-      // * destructure user of the createUserWithEmailAndPassword() which exits on auth from firebase
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-
-      // * create document for user in firestore
-      // * also logs user in
-      // * user is redirected due to <Route {currentUser ? <Redirect to="/" : <SignInAndSignUp /> /> }>
-      await createUserProfileDocument(user, { firstName, lastName, phone });
-
-      // * reset to initial state
-      this.setState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        password: "",
-        confirmPassword: "",
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    emailSignUpStart({ email, password, firstName, lastName, phone });
   };
 
   // * handle state change depending on what user is typing in the FormInput
@@ -135,4 +114,9 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => ({
+  emailSignUpStart: (userCredentials) =>
+    dispatch(emailSignUpStart(userCredentials)),
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);

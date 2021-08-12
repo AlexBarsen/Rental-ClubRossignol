@@ -1,10 +1,5 @@
 import RentalActionTypes from "./rental.types";
 
-// import {
-//   firestore,
-//   convertRentalsSnapshotToMap,
-// } from "../../firebase/firebase.utils";
-
 export const fetchRentalsStart = () => ({
   type: RentalActionTypes.FETCH_RENTALS_START,
 });

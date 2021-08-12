@@ -1,7 +1,7 @@
 // * Redux Saga is a middleware library used to allow Redux store
 // * to interact with resources outside itself asynchronously
 
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, call, put, all } from "redux-saga/effects";
 
 import {
   firestore,
@@ -37,4 +37,8 @@ export function* fetchRentalsAsync() {
 // * generator () calling another generator () insde it
 export function* fetchRentalsStart() {
   yield takeLatest(RentalActionTypes.FETCH_RENTALS_START, fetchRentalsAsync);
+}
+
+export function* rentalSagas() {
+  yield all([call(fetchRentalsStart)]);
 }

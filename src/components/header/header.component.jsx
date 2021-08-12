@@ -2,8 +2,6 @@ import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { auth } from "../../firebase/firebase.utils";
-
 import SignInDropdown from "../sign-in-dropdown/sign-in-dropdown.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import CartIcon from "../cart-icon/cart-icon.component";

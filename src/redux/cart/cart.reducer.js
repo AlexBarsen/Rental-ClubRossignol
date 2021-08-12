@@ -1,7 +1,6 @@
 import CartActionTypes from "./cart.types";
 import { editItem } from "./cart.utils";
 
-// * initialialize state
 const INITIAL_STATE = {
   cartHidden: true,
   cartItems: [],
