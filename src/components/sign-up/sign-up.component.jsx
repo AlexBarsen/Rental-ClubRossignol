@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 import FormInput from "../form-input/form-input.component";
@@ -6,29 +6,22 @@ import CustomButton from "../custom-button/custom-button.component";
 
 import { emailSignUpStart } from "../../redux/user/user.actions";
 
-class SignUp extends React.Component {
-  constructor() {
-    super();
+const SignUp = ({ emailSignUpStart }) => {
+  const [userCredentials, setCredentials] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-    this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      password: "",
-      confirmPassword: "",
-    };
-  }
+  const { firstName, lastName, email, phone, password, confirmPassword } =
+    userCredentials;
 
   // * function which creates the user with email and password
-  handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const { emailSignUpStart } = this.props;
-
-    // * destructure properties from state
-    const { firstName, lastName, email, phone, password, confirmPassword } =
-      this.state;
 
     // * check if password match
     if (password !== confirmPassword) {
@@ -40,79 +33,74 @@ class SignUp extends React.Component {
   };
 
   // * handle state change depending on what user is typing in the FormInput
-  handleChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
 
-    this.setState({ [name]: value });
+    setCredentials({ ...userCredentials, [name]: value });
   };
 
-  render() {
-    // * destructure properties from state
-    const { firstName, lastName, email, phone, password, confirmPassword } =
-      this.state;
-    return (
-      <div className="sign-up">
-        <h1 className="sign-up__heading--primary">Nu am cont inca</h1>
-        <h2 className="sign-up__heading--secondary">
-          Creeaza un cont cu Emailul si parola
-        </h2>
-        <form className="sign-up-form" onSubmit={this.handleSubmit}>
-          <FormInput
-            type="text"
-            name="firstName"
-            value={firstName}
-            onChange={this.handleChange}
-            label="Nume"
-            required
-          />
-          <FormInput
-            type="text"
-            name="lastName"
-            value={lastName}
-            onChange={this.handleChange}
-            label="Prenume"
-            required
-          />
-          <FormInput
-            type="email"
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-            label="Email"
-            required
-          />
-          <FormInput
-            type="tel"
-            name="phone"
-            value={phone}
-            onChange={this.handleChange}
-            label="Numar telefon"
-            required
-          />
-          <FormInput
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-            label="Parola"
-            required
-          />
-          <FormInput
-            type="password"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={this.handleChange}
-            label="Confirma Parola"
-            required
-          />
-          <CustomButton signUp type="submit">
-            SIGN UP
-          </CustomButton>
-        </form>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="sign-up">
+      <h1 className="sign-up__heading--primary">Nu am cont inca</h1>
+      <h2 className="sign-up__heading--secondary">
+        Creeaza un cont cu Emailul si parola
+      </h2>
+      <form className="sign-up-form" onSubmit={handleSubmit}>
+        <FormInput
+          type="text"
+          name="firstName"
+          value={firstName}
+          onChange={handleChange}
+          label="Nume"
+          required
+        />
+        <FormInput
+          type="text"
+          name="lastName"
+          value={lastName}
+          onChange={handleChange}
+          label="Prenume"
+          required
+        />
+        <FormInput
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleChange}
+          label="Email"
+          required
+        />
+        <FormInput
+          type="tel"
+          name="phone"
+          value={phone}
+          onChange={handleChange}
+          label="Numar telefon"
+          required
+        />
+        <FormInput
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleChange}
+          label="Parola"
+          required
+        />
+        <FormInput
+          type="password"
+          name="confirmPassword"
+          value={confirmPassword}
+          onChange={handleChange}
+          label="Confirma Parola"
+          required
+        />
+        <CustomButton signUp type="submit">
+          SIGN UP
+        </CustomButton>
+      </form>
+    </div>
+  );
+};
 
 const mapDispatchToProps = (dispatch) => ({
   emailSignUpStart: (userCredentials) =>

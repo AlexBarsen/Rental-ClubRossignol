@@ -14,12 +14,7 @@ export const selectCartItems = createSelector(
 // * select just the number of items in the cart
 export const selectCartItemsCount = createSelector(
   [selectCartItems],
-  (cartItems) =>
-    cartItems.reduce(
-      (accumulatedQuantity, cartItem) =>
-        accumulatedQuantity + cartItem.quantity,
-      0
-    )
+  (cartItems) => cartItems.length
 );
 
 // * select the value of cartHidden from cart
