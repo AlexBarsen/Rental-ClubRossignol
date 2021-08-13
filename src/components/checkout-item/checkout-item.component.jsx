@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 
 import { clearItemFromCart } from "../../redux/cart/cart.actions";
 
+import EditModal from "../edit-modal/edit-modal.component";
+
 // * destructure props from the cartItem
-const CheckoutItem = ({ cartItem, clearItemFromCart }) => {
+const CheckoutItem = ({ cartItem, clearItemFromCart, editItem }) => {
   const {
     name,
     firstName,
@@ -31,6 +33,8 @@ const CheckoutItem = ({ cartItem, clearItemFromCart }) => {
       <div className="checkout-item__lastName">{lastName}</div>
 
       <div className="checkout-item__details">
+        <EditModal cartItem={cartItem} />
+
         {sex ? (
           <span className="checkout-item__details--sex">
             <span className="checkout-item--highlight">Sex:</span> {sex}{" "}

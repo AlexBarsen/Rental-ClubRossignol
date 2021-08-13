@@ -31,14 +31,14 @@ import ContactIcon from "../../assets/svg/phone.svg";
 import ResturantIcon from "../../assets/svg/spoon-knife.svg";
 import SignInIcon from "../../assets/svg/enter.svg";
 
-// * pass properties into functional Component
-function Header({
+// * pass properties into Component
+const Header = ({
   currentUser,
   userSignInHidden,
   cartHidden,
   toggleUserSignInHidden,
   signOutStart,
-}) {
+}) => {
   const [smallScreen, setScreen] = useState(
     document.documentElement.clientWidth < 600
   );
@@ -226,7 +226,11 @@ function Header({
           </Link>
 
           {currentUser ? (
-            <Link className="header__options--option" onClick={signOutStart}>
+            <Link
+              className="header__options--option"
+              onClick={signOutStart}
+              to="/"
+            >
               <img src={UserIcon} alt="User Icon" className="header__icon" />
               <div className="header__options--user">
                 <span className="header__options--user header__options--user__visible">
@@ -259,7 +263,7 @@ function Header({
       {cartHidden ? null : <CartDropdown />}
     </div>
   );
-}
+};
 
 // * connect to Redux state
 const mapStateToProps = createStructuredSelector({

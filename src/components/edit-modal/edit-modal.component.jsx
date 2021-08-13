@@ -1,34 +1,20 @@
-import React from "react";
-import uuid from "react-uuid";
+import React, { useState, useEffect } from "react";
+
 import { connect } from "react-redux";
-import { DateRange } from "react-date-range";
+
+import { editItem } from "../../redux/cart/cart.actions";
 
 import RentalModalSelectTypes from "../rental-modal-selectTypes/rental-modal-selectTypes.component";
 
-import RentalModalInfo from "../rental-modal-info/rental-modal-info.component";
-
+import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // * main css file
 import "react-date-range/dist/theme/default.css"; // * theme css file
 
-import { addItem } from "../../redux/cart/cart.actions";
-
-import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
+import FormInput from "../form-input/form-input.component";
 
-import { useState } from "react";
-
-const RentalModal = ({ addItem, item }) => {
-  const { name, price, productType } = item;
-
-  const [modalInputs, setModalInputs] = useState({
-    firstName: "",
-    lastName: "",
-    sex: "",
-    height: "",
-    weight: "",
-    shoeSize: "",
-    experience: "",
-  });
+const EditModal = ({ cartItem, editItem }) => {
+  const [cartItems, setCartItems] = useState(cartItem);
 
   const [modalVisibility, setModalVisibility] = useState(false);
 
@@ -54,6 +40,10 @@ const RentalModal = ({ addItem, item }) => {
   const endDateShort = getDate(dateRange.endDate);
   const days = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
 
+  useEffect(() => {
+    setCartItems(cartItem);
+  }, [cartItem]);
+
   // * toggle visible OR hidden Modal depeding on the state
   const toggleModal = () => {
     setModalVisibility(!modalVisibility);
@@ -65,65 +55,33 @@ const RentalModal = ({ addItem, item }) => {
     }
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setModalInputs({ ...modalInputs, [name]: value });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    toggleModal();
-
-    // * pass state into item
-    const orderItem = {
-      name: name,
-      price: price,
-      id: uuid(),
-      productType: productType,
-      ...modalInputs,
-      startDate: dateRange.startDate,
-      endDate: dateRange.endDate,
-      startDateShort: startDateShort,
-      endDateShort: endDateShort,
-      days: Math.round(Math.abs((startDate - endDate) / oneDay)) + 1,
-    };
-
-    addItem(orderItem);
-
-    setModalInputs({
-      firstName: "",
-      lastName: "",
-      sex: "",
-      height: "",
-      weight: "",
-      shoeSize: "",
-      experience: "",
-    });
-  };
-
   // * function which updates the state for the "react-select" <Select>
   const onChangeInput = (selected, props) => {
     switch (props.name) {
       case "height":
-        setModalInputs({ ...modalInputs, height: selected.value });
+        setCartItems({ ...cartItems, height: selected.value });
         break;
       case "weight":
-        setModalInputs({ ...modalInputs, weight: selected.value });
+        setCartItems({ ...cartItems, weight: selected.value });
         break;
       case "shoeSize":
-        setModalInputs({ ...modalInputs, shoeSize: selected.value });
+        setCartItems({ ...cartItems, shoeSize: selected.value });
         break;
       case "experience":
-        setModalInputs({ ...modalInputs, experience: selected.value });
+        setCartItems({ ...cartItems, experience: selected.value });
         break;
       case "sex":
-        setModalInputs({ ...modalInputs, sex: selected.value });
+        setCartItems({ ...cartItems, sex: selected.value });
         break;
       default:
         break;
     }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setCartItems({ ...cartItems, [name]: value });
   };
 
   // * set the state regarding the selected dates by the user
@@ -133,12 +91,50 @@ const RentalModal = ({ addItem, item }) => {
     setDateRange({ ...newRange });
   };
 
-  const { firstName, lastName } = modalInputs;
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
+    const {
+      firstName,
+      lastName,
+      sex,
+      shoeSize,
+      height,
+      experience,
+      weight,
+      price,
+      name,
+      startDate,
+      starteDateShort,
+      endDate,
+      endDateShort,
+      days,
+      id,
+      productType,
+    } = cartItems;
+
+    toggleModal();
+
+    // * pass state into item
+    const editedItem = {
+      ...cartItems,
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
+      startDateShort: startDateShort,
+      endDateShort: endDateShort,
+      days: Math.round(Math.abs((startDate - endDate) / oneDay)) + 1,
+    };
+
+    editItem(editedItem);
+
+    setCartItems({
+      ...editedItem,
+    });
+  };
   return (
     <>
       <CustomButton addToCart onClick={toggleModal}>
-        ALEGE
+        EDIT
       </CustomButton>
 
       {/* render Modal depending on the state */}
@@ -146,7 +142,7 @@ const RentalModal = ({ addItem, item }) => {
         <div className="modal">
           <div className="modal__overlay"></div>
           <div className="modal__content">
-            <h2>{item.name}</h2>
+            <h2>{cartItems.name}</h2>
 
             <form style={{ position: "relative" }} onSubmit={handleSubmit}>
               <div className="modal__wrapper-all">
@@ -169,7 +165,7 @@ const RentalModal = ({ addItem, item }) => {
                       name="firstName"
                       type="text"
                       label="Nume"
-                      value={firstName}
+                      value={cartItems.firstName}
                       onChange={handleChange}
                       required
                     />
@@ -178,25 +174,25 @@ const RentalModal = ({ addItem, item }) => {
                       name="lastName"
                       type="text"
                       label="Prenume"
-                      value={lastName}
+                      value={cartItems.lastName}
                       onChange={handleChange}
                       required
                     />
 
                     <RentalModalSelectTypes
-                      productType={productType}
+                      productType={cartItem.productType}
                       onChangeInput={onChangeInput.bind(this)}
                     />
                   </div>
 
-                  <RentalModalInfo
+                  {/* <RentalModalInfo
                     startDate={startDateShort}
                     endDate={endDateShort}
                     days={days}
-                  />
+                  /> */}
 
                   <CustomButton addToCart type="submit">
-                    ADAUGA IN COS
+                    EDITEAZA
                   </CustomButton>
                 </div>
               </div>
@@ -211,9 +207,8 @@ const RentalModal = ({ addItem, item }) => {
   );
 };
 
-// * dispatch function to the Redux store
 const mapDispatchToProps = (dispatch) => ({
-  addItem: (item) => dispatch(addItem(item)),
+  editItem: (item) => dispatch(editItem(item)),
 });
 
-export default connect(null, mapDispatchToProps)(RentalModal);
+export default connect(null, mapDispatchToProps)(EditModal);
