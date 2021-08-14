@@ -1,0 +1,22 @@
+.modal {
+  &__rental-info {
+    width: 30vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1.5rem;
+
+    &--input {
+      width: 100%;
+      font-size: 1.6rem;
+      padding: 0.5rem;
+      border: 0.1rem solid lightgrey;
+      border-radius: 0.4rem;
+
+      &:focus {
+        outline: none;
+        border: 0.1rem solid rgb(38, 132, 255);
+        box-shadow: 0 0 0 0.1rem rgb(38, 132, 255);
+      }
+    }
+  }
+}

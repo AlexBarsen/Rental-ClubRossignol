@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 
 import { editItem } from "../../redux/cart/cart.actions";
 
-import RentalModalSelectTypes from "../rental-modal-selectTypes/rental-modal-selectTypes.component";
+import EditModalSelectTypes from "../edit-modal-selectTypes.component.jsx/edit-modal-selectTypes.component";
+
+import RentalModalInfo from "../rental-modal-info/rental-modal-info.component";
 
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // * main css file
@@ -14,35 +16,39 @@ import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
 
 const EditModal = ({ cartItem, editItem }) => {
-  const [cartItems, setCartItems] = useState(cartItem);
+  const [item, setItem] = useState(cartItem);
 
   const [modalVisibility, setModalVisibility] = useState(false);
 
+  const initialStartDate = new Date(cartItem.startDate);
+  const initialEndDate = new Date(cartItem.endDate);
+
   const [dateRange, setDateRange] = useState({
-    startDate: new Date(new Date().setDate(new Date().getDate() + 1)),
-    endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+    startDate: initialStartDate,
+    endDate: initialEndDate,
     key: "selection",
   });
 
+  useEffect(() => {
+    setItem(cartItem);
+  }, [cartItem]);
+
   // * get date in DD/MM/YYYY format
-  const getDate = (date) => {
-    const startDay = date.getDate();
-    const startMonth = date.getMonth() + 1;
-    const startYear = date.getFullYear();
+  const transformDate = (date) => {
+    const startDay = new Date(date).getDate();
+    const startMonth = new Date(date).getMonth() + 1;
+    const startYear = new Date(date).getFullYear();
     return startDay + "/" + startMonth + "/" + startYear;
   };
 
-  // * custom configuration for the Date
   const oneDay = 24 * 60 * 60 * 1000;
-  const startDate = dateRange.startDate;
-  const endDate = dateRange.endDate;
-  const startDateShort = getDate(dateRange.startDate);
-  const endDateShort = getDate(dateRange.endDate);
-  const days = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
-
-  useEffect(() => {
-    setCartItems(cartItem);
-  }, [cartItem]);
+  const days = Math.round(
+    Math.abs((dateRange.startDate - dateRange.endDate) / oneDay) + 1
+  );
+  const newStartDate = dateRange.startDate;
+  const newEndDate = dateRange.endDate;
+  const newStartDateShort = transformDate(newStartDate);
+  const newEndDateShort = transformDate(newEndDate);
 
   // * toggle visible OR hidden Modal depeding on the state
   const toggleModal = () => {
@@ -59,19 +65,19 @@ const EditModal = ({ cartItem, editItem }) => {
   const onChangeInput = (selected, props) => {
     switch (props.name) {
       case "height":
-        setCartItems({ ...cartItems, height: selected.value });
+        setItem({ ...item, height: selected.value });
         break;
       case "weight":
-        setCartItems({ ...cartItems, weight: selected.value });
+        setItem({ ...item, weight: selected.value });
         break;
       case "shoeSize":
-        setCartItems({ ...cartItems, shoeSize: selected.value });
+        setItem({ ...item, shoeSize: selected.value });
         break;
       case "experience":
-        setCartItems({ ...cartItems, experience: selected.value });
+        setItem({ ...item, experience: selected.value });
         break;
       case "sex":
-        setCartItems({ ...cartItems, sex: selected.value });
+        setItem({ ...item, sex: selected.value });
         break;
       default:
         break;
@@ -81,7 +87,7 @@ const EditModal = ({ cartItem, editItem }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setCartItems({ ...cartItems, [name]: value });
+    setItem({ ...item, [name]: value });
   };
 
   // * set the state regarding the selected dates by the user
@@ -94,43 +100,35 @@ const EditModal = ({ cartItem, editItem }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const {
-      firstName,
-      lastName,
-      sex,
-      shoeSize,
-      height,
-      experience,
-      weight,
-      price,
-      name,
-      startDate,
-      starteDateShort,
-      endDate,
-      endDateShort,
-      days,
-      id,
-      productType,
-    } = cartItems;
-
     toggleModal();
 
     // * pass state into item
     const editedItem = {
-      ...cartItems,
-      startDate: dateRange.startDate,
-      endDate: dateRange.endDate,
-      startDateShort: startDateShort,
-      endDateShort: endDateShort,
-      days: Math.round(Math.abs((startDate - endDate) / oneDay)) + 1,
+      ...item,
+      startDate: newStartDate,
+      endDate: newEndDate,
+      startDateShort: newStartDateShort,
+      endDateShort: newEndDateShort,
+      days: days,
     };
+
+    console.log(editedItem);
 
     editItem(editedItem);
 
-    setCartItems({
+    setItem({
       ...editedItem,
     });
   };
+
+  const defaultValues = {
+    height: cartItem.height,
+    experience: cartItem.experience,
+    sex: cartItem.sex,
+    shoeSize: cartItem.shoeSize,
+    weight: cartItem.weight,
+  };
+
   return (
     <>
       <CustomButton addToCart onClick={toggleModal}>
@@ -142,7 +140,7 @@ const EditModal = ({ cartItem, editItem }) => {
         <div className="modal">
           <div className="modal__overlay"></div>
           <div className="modal__content">
-            <h2>{cartItems.name}</h2>
+            <h2>{item.name}</h2>
 
             <form style={{ position: "relative" }} onSubmit={handleSubmit}>
               <div className="modal__wrapper-all">
@@ -165,7 +163,7 @@ const EditModal = ({ cartItem, editItem }) => {
                       name="firstName"
                       type="text"
                       label="Nume"
-                      value={cartItems.firstName}
+                      value={item.firstName}
                       onChange={handleChange}
                       required
                     />
@@ -174,22 +172,23 @@ const EditModal = ({ cartItem, editItem }) => {
                       name="lastName"
                       type="text"
                       label="Prenume"
-                      value={cartItems.lastName}
+                      value={item.lastName}
                       onChange={handleChange}
                       required
                     />
 
-                    <RentalModalSelectTypes
+                    <EditModalSelectTypes
+                      defaultValues={defaultValues}
                       productType={cartItem.productType}
                       onChangeInput={onChangeInput.bind(this)}
                     />
                   </div>
 
-                  {/* <RentalModalInfo
-                    startDate={startDateShort}
-                    endDate={endDateShort}
+                  <RentalModalInfo
+                    startDate={newStartDateShort}
+                    endDate={newEndDateShort}
                     days={days}
-                  /> */}
+                  />
 
                   <CustomButton addToCart type="submit">
                     EDITEAZA

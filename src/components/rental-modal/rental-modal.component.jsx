@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import uuid from "react-uuid";
 import { connect } from "react-redux";
 import { DateRange } from "react-date-range";
@@ -14,8 +14,6 @@ import { addItem } from "../../redux/cart/cart.actions";
 
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
-
-import { useState } from "react";
 
 const RentalModal = ({ addItem, item }) => {
   const { name, price, productType } = item;
@@ -39,7 +37,7 @@ const RentalModal = ({ addItem, item }) => {
   });
 
   // * get date in DD/MM/YYYY format
-  const getDate = (date) => {
+  const transformDate = (date) => {
     const startDay = date.getDate();
     const startMonth = date.getMonth() + 1;
     const startYear = date.getFullYear();
@@ -50,8 +48,8 @@ const RentalModal = ({ addItem, item }) => {
   const oneDay = 24 * 60 * 60 * 1000;
   const startDate = dateRange.startDate;
   const endDate = dateRange.endDate;
-  const startDateShort = getDate(dateRange.startDate);
-  const endDateShort = getDate(dateRange.endDate);
+  const startDateShort = transformDate(dateRange.startDate);
+  const endDateShort = transformDate(dateRange.endDate);
   const days = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
 
   // * toggle visible OR hidden Modal depeding on the state
