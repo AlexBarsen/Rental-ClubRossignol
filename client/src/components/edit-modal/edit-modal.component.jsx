@@ -18,6 +18,10 @@ import FormInput from "../form-input/form-input.component";
 const EditModal = ({ cartItem, editItem }) => {
   const [item, setItem] = useState(cartItem);
 
+  useEffect(() => {
+    setItem(cartItem);
+  }, [cartItem]);
+
   const [modalVisibility, setModalVisibility] = useState(false);
 
   const initialStartDate = new Date(cartItem.startDate);
@@ -28,10 +32,6 @@ const EditModal = ({ cartItem, editItem }) => {
     endDate: initialEndDate,
     key: "selection",
   });
-
-  useEffect(() => {
-    setItem(cartItem);
-  }, [cartItem]);
 
   // * get date in DD/MM/YYYY format
   const transformDate = (date) => {

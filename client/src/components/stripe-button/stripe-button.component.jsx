@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 
+import axios from "axios";
+
 import { clearCart } from "../../redux/cart/cart.actions";
 
 // * pass properties into Component
@@ -13,9 +15,26 @@ const StripeCheckoutButton = ({ price, clearCart }) => {
 
   // * function which returns a Order Object and also clears the cart upon success
   const onToken = (token) => {
-    console.log(token);
-    alert("Plata reusita");
-    clearCart();
+    // console.log(token);
+    // alert("Plata reusita");
+    // clearCart();
+    axios({
+      url: "payment",
+      method: "post",
+      data: {
+        amount: priceForStripe,
+        token,
+      },
+    })
+      .then((response) => {
+        alert("Payment successful");
+      })
+      .catch((error) => {
+        console.log("Payment error: ", error);
+        alert(
+          "There was an issue with your payment. Please make sure you use the provided credit card"
+        );
+      });
   };
 
   // * return the StripeCheckout Button with the configuration written above
